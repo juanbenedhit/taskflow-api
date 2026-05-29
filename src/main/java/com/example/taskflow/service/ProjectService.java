@@ -3,6 +3,7 @@ package com.example.taskflow.service;
 import com.example.taskflow.dto.ProjectRequest;
 import com.example.taskflow.entity.Project;
 import com.example.taskflow.repository.ProjectRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class ProjectService {
     }
 
     // Fungsi untuk mengambil semua Project
+    @Cacheable("projects")
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }

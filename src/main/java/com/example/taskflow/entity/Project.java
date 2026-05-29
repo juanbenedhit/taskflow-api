@@ -1,12 +1,14 @@
 package com.example.taskflow.entity;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "projects")
-public class Project {
+public class Project implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,7 +21,7 @@ public class Project {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     // Satu Project bisa memiliki banyak Task
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Task> tasks;
 
     public Project() {

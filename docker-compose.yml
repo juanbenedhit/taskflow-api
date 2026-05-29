@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # 1. Menyiapkan Database PostgreSQL
+  postgres-db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: rahasia
+      POSTGRES_DB: userdb
+    ports:
+      - "5432:5432"
+
+  # 2. Menyiapkan Redis Cache
+  redis-cache:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  # 3. Menyiapkan Aplikasi TaskFlow kita
+  taskflow-api:
+    build: .
+    ports:
+      - "8081:8080"
+    environment:
+      # Kita menimpa settingan application.properties agar mengarah ke container Docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/userdb
+      - SPRING_DATA_REDIS_HOST=redis-cache
+    depends_on:
+      - postgres-db
+      - redis-cache
