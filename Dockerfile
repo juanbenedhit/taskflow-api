@@ -11,6 +11,6 @@ FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 # Ambil file .jar dari tahap 1
 COPY --from=build /app/target/*.jar app.jar
-EXPOSE 8080
+EXPOSE 8082
 # Perintah saat container dinyalakan
 ENTRYPOINT ["java", "-jar", "app.jar"]

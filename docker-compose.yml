@@ -21,7 +21,7 @@ services:
   taskflow-api:
     build: .
     ports:
-      - "8081:8080"
+      - "8082:8082"
     environment:
       # Kita menimpa settingan application.properties agar mengarah ke container Docker
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/userdb
