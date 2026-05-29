@@ -1,0 +1,29 @@
+name: TaskFlow CI Pipeline
+
+# Pipeline akan berjalan otomatis setiap ada push ke branch 'main'
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Mengambil kode kamu dari GitHub
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      # 2. Memasang Java 17 di komputer awan
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: "maven"
+
+      # 3. Menjalankan Unit Test yang sudah kamu buat!
+      - name: Run Maven Tests
+        run: mvn clean test
